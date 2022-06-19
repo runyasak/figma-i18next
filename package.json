@@ -1,0 +1,43 @@
+{
+  "dependencies": {
+    "@create-figma-plugin/ui": "^2.0.1",
+    "@create-figma-plugin/utilities": "^2.0.1",
+    "i18next": "^21.8.9",
+    "preact": "^10"
+  },
+  "devDependencies": {
+    "@create-figma-plugin/build": "^2.0.1",
+    "@create-figma-plugin/tsconfig": "^2.0.1",
+    "@figma/plugin-typings": "1.45.0",
+    "typescript": "^4"
+  },
+  "scripts": {
+    "build": "build-figma-plugin --typecheck --minify",
+    "watch": "build-figma-plugin --typecheck --watch"
+  },
+  "figma-plugin": {
+    "editorType": [
+      "figma"
+    ],
+    "id": "figma-i18next",
+    "name": "Figma i18next",
+    "menu": [
+      {
+        "name": "Open UI",
+        "main": "src/main.ts",
+        "ui": "src/ui.tsx"
+      },
+      "-",
+      {
+        "name": "Run Update",
+        "main": "src/updateText.ts"
+      }
+    ],
+    "relaunchButtons": {
+      "figma-i18next": {
+        "name": "Figma i18next",
+        "main": "src/updateText.ts"
+      }
+    }
+  }
+}
