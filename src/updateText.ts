@@ -14,15 +14,9 @@ function findIntepolationText(lang: string = "en"): string {
 
 async function updateValue(tn: TextNode, translate: string) {
   const updateValue = i18next.t(translate);
-  console.log("----");
-  console.log("Translate: ", translate);
-  console.log("textNode origin: ", tn.characters);
-  console.log("update Value: ", updateValue);
   // if (textNode?.characters !== updateValue) {
   await loadFont(tn).then(() => {
     // textNode.characters = updateValue;
-    console.log("on update: ", updateValue);
-    console.log("name: ", tn.name);
     tn.characters = updateValue;
   });
   // }
@@ -52,7 +46,7 @@ async function updateAllTextProperty() {
     },
   });
 
-  i18next.changeLanguage("en", (err, t) => {
+  i18next.changeLanguage("th", (err, t) => {
     if (err) console.log("Error:", err);
   });
 
