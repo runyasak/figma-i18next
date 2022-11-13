@@ -1,4 +1,6 @@
 import { setRelaunchButton } from "@create-figma-plugin/utilities";
+import { traverseNode } from "@create-figma-plugin/utilities";
+import { TText } from "./tText";
 import i18next from "i18next";
 
 async function loadFont(text: TextNode) {
@@ -12,14 +14,29 @@ function findIntepolationText(lang: string = "en"): string {
   return `{ ${textNode.characters} }`;
 }
 
-async function updateValue(tn: TextNode, translate: string) {
+async function updateValue(textNode: TextNode, translate: string) {
   const updateValue = i18next.t(translate);
-  // if (textNode?.characters !== updateValue) {
-  await loadFont(tn).then(() => {
-    // textNode.characters = updateValue;
-    tn.characters = updateValue;
+
+  if (textNode.characters !== updateValue) {
+    await loadFont(textNode).then(() => {
+      textNode.characters = updateValue;
+    });
+  }
+}
+
+function findAllText(): Array<TText> {
+  let tTexts: TText[] = [];
+
+  const resultNodes: Array<SceneNode> = figma.currentPage.findAll(
+    (node) => node.type === "TEXT" && /#t.|_#t./.test(node.name)
+  );
+
+  resultNodes.forEach((node) => {
+    if (node.type == "TEXT") {
+      tTexts.push(new TText(node));
+    }
   });
-  // }
+  return tTexts;
 }
 
 async function updateAllTextProperty() {
@@ -50,16 +67,16 @@ async function updateAllTextProperty() {
     if (err) console.log("Error:", err);
   });
 
-  const textNodes = figma.currentPage.findAll(
-    (node) => /#t.|_#t./.test(node.name) && node.type == "TEXT"
-  );
+  const tTexts: TText[] = findAllText();
+
+  // const textNodes = figma.currentPage.findAll(
+  //   (node) => /#t.|_#t./.test(node.name) && node.type == "TEXT"
+  // );
 
   await Promise.all(
-    textNodes.map((textNode) => {
-      const names = textNode.name.match(/_?#t.?([a-zA-Z0-9]*)/);
-      if (textNode.type == "TEXT" && names) {
-        return updateValue(<TextNode>textNode, names[1]);
-      }
+    tTexts.map((tText) => {
+      const name = tText.key;
+      return updateValue(tText.node, name);
     })
   );
 }
