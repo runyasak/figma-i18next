@@ -1,15 +1,14 @@
 export interface TText {
+  node: TextNode;
   type: string;
+  language: string;
+  key: string;
   debug(): any;
 }
 
 export class TText implements TText {
-  node: TextNode;
-  key: string = "";
-  type: string = "";
-  language: string = "";
-
   constructor(node: TextNode) {
+    this.type = "TText";
     this.node = node;
     this.key = this.matchKey();
     this.language = this.matchReferenceLanguage();

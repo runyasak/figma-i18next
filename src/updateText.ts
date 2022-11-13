@@ -14,7 +14,16 @@ function findIntepolationText(lang: string = "en"): string {
   return `{ ${textNode.characters} }`;
 }
 
-async function updateValue(textNode: TextNode, translate: string) {
+async function updateValue(tText: TText) {
+  const textNode = tText.node;
+  const translate = tText.key;
+
+  if (i18next.language != tText.language) {
+    i18next.changeLanguage(tText.language, (err, t) => {
+      if (err) console.log("Error:", err);
+    });
+  }
+
   const updateValue = i18next.t(translate);
 
   if (textNode.characters !== updateValue) {
@@ -24,8 +33,16 @@ async function updateValue(textNode: TextNode, translate: string) {
   }
 }
 
-function findAllText(): Array<TText> {
-  let tTexts: TText[] = [];
+type TTextByLanguage = {
+  th: TText[];
+  en: TText[];
+};
+
+function findAllText(): TTextByLanguage {
+  let tTextByLanguage: TTextByLanguage = {
+    th: [],
+    en: [],
+  };
 
   const resultNodes: Array<SceneNode> = figma.currentPage.findAll(
     (node) => node.type === "TEXT" && /#t.|_#t./.test(node.name)
@@ -33,10 +50,13 @@ function findAllText(): Array<TText> {
 
   resultNodes.forEach((node) => {
     if (node.type == "TEXT") {
-      tTexts.push(new TText(node));
+      let tText = new TText(node);
+      if (tText.language === "th" || tText.language === "en") {
+        tTextByLanguage[tText.language]?.push(tText);
+      }
     }
   });
-  return tTexts;
+  return tTextByLanguage;
 }
 
 async function updateAllTextProperty() {
@@ -67,16 +87,12 @@ async function updateAllTextProperty() {
     if (err) console.log("Error:", err);
   });
 
-  const tTexts: TText[] = findAllText();
-
-  // const textNodes = figma.currentPage.findAll(
-  //   (node) => /#t.|_#t./.test(node.name) && node.type == "TEXT"
-  // );
+  const tTextByLanguages: TTextByLanguage = findAllText();
+  const x = [...tTextByLanguages["th"], ...tTextByLanguages["en"]];
 
   await Promise.all(
-    tTexts.map((tText) => {
-      const name = tText.key;
-      return updateValue(tText.node, name);
+    x.map((tText) => {
+      return updateValue(tText);
     })
   );
 }
