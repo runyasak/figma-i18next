@@ -9,9 +9,20 @@ async function loadFont(text: TextNode) {
 }
 
 function findIntepolationText(lang: string = "en"): string {
-  const text = figma.currentPage.findAll((n) => n.name === `##key.${lang}`);
-  const textNode = <TextNode>text[0];
-  return `{ ${textNode.characters} }`;
+  figma.skipInvisibleInstanceChildren = true;
+
+  const allTextByLanguage = figma.root
+    .findAllWithCriteria({
+      types: ["TEXT"],
+    })
+    .find((n) => n.name === `##key.${lang}`);
+
+  if (allTextByLanguage != undefined) {
+    const textNode = <TextNode>allTextByLanguage;
+    return `{ ${textNode.characters} }`;
+  } else {
+    return ``;
+  }
 }
 
 async function updateValue(tText: TText) {
@@ -25,7 +36,6 @@ async function updateValue(tText: TText) {
   }
 
   const updateValue = i18next.t(translate);
-
   if (textNode.characters !== updateValue) {
     await loadFont(textNode).then(() => {
       textNode.characters = updateValue;
@@ -67,7 +77,7 @@ async function updateAllTextProperty() {
   const jsonObjectTh = JSON.parse(textJsonTh);
 
   i18next.init({
-    compatibilityJSON: "v3",
+    compatibilityJSON: "v4",
     fallbackLng: ["en", "th"],
     debug: true,
     resources: {

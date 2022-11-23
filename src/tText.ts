@@ -16,6 +16,7 @@ export class TText implements TText {
 
   matchKey(): string {
     let searchKeys = this.node.name.match(/_?#t.?([a-zA-Z0-9.]*)/);
+    console.log("searchKeys", searchKeys);
     return searchKeys ? searchKeys[1] : "";
   }
 
