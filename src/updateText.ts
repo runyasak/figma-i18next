@@ -44,14 +44,13 @@ async function updateValue(tText: TText) {
 }
 
 type TTextByLanguage = {
-  th: TText[];
-  en: TText[];
+  [key in "en" | "th"]?: TText[];
 };
 
 function findAllText(): TTextByLanguage {
   let tTextByLanguage: TTextByLanguage = {
-    th: [],
     en: [],
+    th: [],
   };
 
   const resultNodes: Array<SceneNode> = figma.currentPage.findAll(
@@ -98,10 +97,13 @@ async function updateAllTextProperty() {
   });
 
   const tTextByLanguages: TTextByLanguage = findAllText();
-  const x = [...tTextByLanguages["th"], ...tTextByLanguages["en"]];
+  const allTextOrderByLanguage = [
+    ...(tTextByLanguages["th"] ? tTextByLanguages["th"] : []),
+    ...(tTextByLanguages["en"] ? tTextByLanguages["en"] : []),
+  ];
 
   await Promise.all(
-    x.map((tText) => {
+    allTextOrderByLanguage.map((tText) => {
       return updateValue(tText);
     })
   );
