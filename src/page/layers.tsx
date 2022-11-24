@@ -1,13 +1,30 @@
 import {h} from 'preact';
+import { useCallback } from 'preact/hooks';
+import { emit } from '@create-figma-plugin/utilities';
 import { Container, VerticalSpace, Text, Columns, Button} from '@create-figma-plugin/ui';
+import { CloseHandler } from '../types'
 
 const handleCreateRectanglesButtonClick = () => {
-  return ""
+  console.log("Create")
+  return "A"
 }
 
 const handleCloseButtonClick = () => {
-  return ""
+  console.log("Close")
+  emit<CloseHandler>('CLOSE')
+  return "B"
 }
+
+// const handleCreateRectanglesButtonClick1 = useCallback(() => {
+//   console.log("in Update Page");h
+// }, [])
+
+// const handleCloseButtonClick1 = useCallback(
+//   function () {
+//     console.log("in Update All");
+//     // emit<CloseHandler>('CLOSE')
+//   }, []
+// )
 
 const Layers = () => {
   return (
