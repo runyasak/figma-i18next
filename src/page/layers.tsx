@@ -3,49 +3,50 @@ import { useCallback } from 'preact/hooks';
 import { emit } from '@create-figma-plugin/utilities';
 import { CloseHandler } from '../types'
 import { Container, VerticalSpace, Text, Columns, Button} from '@create-figma-plugin/ui';
-import { Textbox, IconLayerFrame16 } from '@create-figma-plugin/ui';
+import { Textbox, IconLayerFrame16, IconStyles32, IconComponent32, IconButton } from '@create-figma-plugin/ui';
 import { useState } from 'preact/hooks';
 
-const handleCreateRectanglesButtonClick = () => {
-  console.log("Create")
-  return "A"
-}
-
-const handleCloseButtonClick = () => {
-  console.log("Close")
-  emit<CloseHandler>('CLOSE')
-  return "B"
-}
-
-// const handleCreateRectanglesButtonClick1 = useCallback(() => {
-//   console.log("in Update Page");h
-// }, [])
-
-// const handleCloseButtonClick1 = useCallback(
-//   function () {
-//     console.log("in Update All");
-//     // emit<CloseHandler>('CLOSE')
-//   }, []
-// )
-
 const Layers = () => {
-
   const [value, setValue] = useState<string>('Text')
+  const [inputFields, setInputFields] = useState([
+    { name: 'Abc', age: '20' },
+    { name: 'Abc', age: '20' }
+  ])
+  const [textLayers, setTextLayers] = useState([
+    { name: 'TT', value: 'Text 1' },
+    { name: 'BB', value: 'Text 2' }
+  ])
 
-  function handleInput(event: JSX.TargetedEvent<HTMLInputElement>) {
-    const newValue = event.currentTarget.value
+  const handleCreateRectanglesButtonClick = useCallback(() => {
+    console.log("in Update Page");h
+  }, [])
+
+  const handleCloseButtonClick = useCallback(
+    function () {
+      // console.log("in Update All");
+      emit<CloseHandler>('CLOSE')
+    }, []
+  )
+
+  function handleInput(index: number, e: JSX.TargetedEvent<HTMLInputElement>) {
+    const newValue = e.currentTarget.value
     console.log(newValue)
     setValue(newValue)
   }
 
+  // const handleCreateComponent = (event: JSX.MouseEventHandler<HTMLButtonElement>) => {
+  const handleCreateComponent = (index: number, e: JSX.TargetedMouseEvent<HTMLButtonElement>) => {
+    console.log("create Component")
+  }
 
-  const [inputFields, setInputFields] = useState([
-    { name: 'Abc', age: '20' }
-  ])
-
-  const handleFormChange = (index: number, event: h.JSX.TargetedEvent<HTMLInputElement, Event>) => {
+  const handleFormChange = (index: number, e: JSX.TargetedEvent<HTMLInputElement>) => {
     let data = [...inputFields];
-    console.log(data);
+    const name = (e.target as HTMLInputElement).name
+    const value = (e.target as HTMLInputElement).value
+    if (name === "name" || name === "age"){
+      data[index][name] = value
+    }
+    setInputFields(data)
   }
 
   return (
@@ -54,16 +55,19 @@ const Layers = () => {
        <Text muted>Layers</Text>
        <VerticalSpace space="small" />
        <form>
-         {inputFields.map((input, index) => {
+         {textLayers.map((textLayer, index) => {
           return (
             <div key={index}>
-            <Textbox icon={<IconLayerFrame16 />} onInput={handleInput} value={value} />
-            <input name='name' placeholder='Name' value={input.name} onChange={event => handleFormChange(index, event)}/>
-            <input name='age' placeholder='Age' value={input.age} />
-           </div>
+              <Columns space="extraSmall">
+                <Textbox icon={<IconLayerFrame16 />} value={textLayer.name} onChange={e => handleInput(index, e)}/>
+                <Textbox value={textLayer.value} onChange={e => handleInput(index, e)}/>
+                <IconButton onClick={e => handleCreateComponent(index, e)}>
+                  <IconComponent32 />
+                </IconButton>
+              </Columns>
+            </div>
           )
          })}
-
        </form>
        <VerticalSpace space="small" />
        <Columns space="extraSmall">
