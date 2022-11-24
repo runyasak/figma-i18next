@@ -8,10 +8,6 @@ import { useState } from 'preact/hooks';
 
 const Layers = () => {
   const [value, setValue] = useState<string>('Text')
-  const [inputFields, setInputFields] = useState([
-    { name: 'Abc', age: '20' },
-    { name: 'Abc', age: '20' }
-  ])
   const [textLayers, setTextLayers] = useState([
     { name: 'TT', value: 'Text 1' },
     { name: 'BB', value: 'Text 2' }
@@ -39,15 +35,15 @@ const Layers = () => {
     console.log("create Component")
   }
 
-  const handleFormChange = (index: number, e: JSX.TargetedEvent<HTMLInputElement>) => {
-    let data = [...inputFields];
-    const name = (e.target as HTMLInputElement).name
-    const value = (e.target as HTMLInputElement).value
-    if (name === "name" || name === "age"){
-      data[index][name] = value
-    }
-    setInputFields(data)
-  }
+  // const handleFormChange = (index: number, e: JSX.TargetedEvent<HTMLInputElement>) => {
+  //   let data = [...inputFields];
+  //   const name = (e.target as HTMLInputElement).name
+  //   const value = (e.target as HTMLInputElement).value
+  //   if (name === "name" || name === "age"){
+  //     data[index][name] = value
+  //   }
+  //   setInputFields(data)
+  // }
 
   return (
      <Container space="medium">
