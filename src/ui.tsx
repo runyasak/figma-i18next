@@ -13,7 +13,9 @@ import { emit } from "@create-figma-plugin/utilities";
 import { h, JSX } from "preact";
 import { useCallback, useState } from "preact/hooks";
 import { Layers } from "./page/layers";
-import { Setup } from "./page/setup";
+import { Setting } from "./page/setting";
+import { Library } from "./page/Library";
+import { Component } from "./page/Component";
 
 import { CloseHandler, CreateRectanglesHandler } from "./types";
 
@@ -31,8 +33,16 @@ function Plugin() {
       value: "Layers",
     },
     {
-      children: <Setup />,
-      value: "Setup",
+      children: <Component />,
+      value: "Component",
+    },
+    {
+      children: <Library />,
+      value: "Library",
+    },
+    {
+      children: <Setting />,
+      value: "Setting",
     },
   ];
 
