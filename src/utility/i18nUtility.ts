@@ -11,10 +11,6 @@ async function i18nInit() {
       escapeValue: false,
     },
   });
-
-  i18next.changeLanguage("th", (err, t) => {
-    if (err) console.log("Error:", err);
-  });
 }
 
 export { i18nInit };

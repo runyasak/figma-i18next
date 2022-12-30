@@ -8,28 +8,52 @@ export async function loadFont(text: TextNode) {
 }
 
 type TTextByLanguage = {
-  [key in "en" | "th"]?: TText[];
+  [key: string]: TText[];
 };
 
-function findAllTextNode(): TTextByLanguage {
-  let tTextByLanguage: TTextByLanguage = {
-    en: [],
-    th: [],
-  };
-
-  const resultNodes: Array<SceneNode> = figma.currentPage.findAll(
+const findAllTextNode = (): Array<TextNode> => {
+  let textNode: Array<TextNode> = [];
+  const sceneNodes = figma.currentPage.findAll(
     (node) => node.type === "TEXT" && /#t.|_#t./.test(node.name)
   );
 
-  resultNodes.forEach((node) => {
-    if (node.type == "TEXT") {
-      let tText = new TText(node);
-      if (tText.language === "th" || tText.language === "en") {
-        tTextByLanguage[tText.language]?.push(tText);
-      }
+  sceneNodes.forEach((n) => {
+    if (n.type === "TEXT") {
+      textNode.push(<TextNode>n);
     }
   });
-  return tTextByLanguage;
+
+  return textNode;
+};
+
+function OrderTextNodeByLanguage(textNodes: Array<TextNode>): Array<TText> {
+  let tTextByLanguage: TTextByLanguage = {};
+  const languages = getLanguages();
+
+  //prepare group
+  languages.forEach((key) => {
+    tTextByLanguage[key] = [];
+  });
+
+  console.log("x");
+
+  //create tText and group by language
+  textNodes.forEach((node) => {
+    let tText = new TText(node);
+    tTextByLanguage[tText.language]?.push(tText);
+  });
+
+  console.log("y");
+
+  // flatten tText
+  let tTexts: Array<TText> = [];
+  languages.forEach((lang) => {
+    tTextByLanguage[lang].forEach((tText) => {
+      tTexts.push(tText);
+    });
+  });
+
+  return tTexts;
 }
 
 async function updateValue(tText: TText) {
@@ -51,13 +75,8 @@ async function updateValue(tText: TText) {
 }
 
 async function updateAllTextProperty() {
-  console.log("array", getLanguageArray());
-  console.log("languages", getLanguages());
-  const tTextByLanguages: TTextByLanguage = findAllTextNode();
-  const allTextOrderByLanguage = [
-    ...(tTextByLanguages["th"] ? tTextByLanguages["th"] : []),
-    ...(tTextByLanguages["en"] ? tTextByLanguages["en"] : []),
-  ];
+  const allTextNode = findAllTextNode();
+  const allTextOrderByLanguage = OrderTextNodeByLanguage(allTextNode);
 
   await Promise.all(
     allTextOrderByLanguage.map((tText) => {
