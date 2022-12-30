@@ -1,29 +1,32 @@
 import { setRelaunchButton } from "@create-figma-plugin/utilities";
-import { traverseNode } from "@create-figma-plugin/utilities";
-import { TText } from "./tText";
-import i18next from "i18next";
+import { loadFont } from "./utility/textUnility";
+import {
+  initLanguageStorage,
+  getLanguageResource,
+} from "./utility/languageStorage";
 
-async function loadFont(text: TextNode) {
-  const font = <FontName>text.fontName;
-  await figma.loadFontAsync({ family: font.family, style: font.style });
-}
+import { TText } from "./utility/tText";
+import i18next, { loadLanguages } from "i18next";
 
-function findIntepolationText(lang: string = "en"): string {
-  figma.skipInvisibleInstanceChildren = true;
+let jsonObjectEn = {};
+let jsonObjectTh = {};
 
-  const allTextByLanguage = figma.root
-    .findAllWithCriteria({
-      types: ["TEXT"],
-    })
-    .find((n) => n.name === `##key.${lang}`);
+// function findIntepolationText(lang: string): string {
+//   figma.skipInvisibleInstanceChildren = true;
 
-  if (allTextByLanguage != undefined) {
-    const textNode = <TextNode>allTextByLanguage;
-    return `{ ${textNode.characters} }`;
-  } else {
-    return ``;
-  }
-}
+//   const allTextByLanguage = figma.root
+//     .findAllWithCriteria({
+//       types: ["TEXT"],
+//     })
+//     .find((n) => n.name === `##key.${lang}`);
+
+//   if (allTextByLanguage != undefined) {
+//     const textNode = <TextNode>allTextByLanguage;
+//     return `{ ${textNode.characters} }`;
+//   } else {
+//     return ``;
+//   }
+// }
 
 async function updateValue(tText: TText) {
   const textNode = tText.node;
@@ -69,24 +72,11 @@ function findAllText(): TTextByLanguage {
 }
 
 async function updateAllTextProperty() {
-  const textJsonEn = findIntepolationText("en");
-  const textJsonTh = findIntepolationText("th");
-
-  const jsonObjectEn = JSON.parse(textJsonEn);
-  const jsonObjectTh = JSON.parse(textJsonTh);
-
   i18next.init({
     compatibilityJSON: "v4",
-    fallbackLng: ["en", "th"],
+    fallbackLng: ["en"],
     debug: true,
-    resources: {
-      th: {
-        translation: jsonObjectTh,
-      },
-      en: {
-        translation: jsonObjectEn,
-      },
-    },
+    resources: getLanguageResource(),
     interpolation: {
       escapeValue: false,
     },
@@ -109,14 +99,16 @@ async function updateAllTextProperty() {
   );
 }
 
-export default function () {
+const updateAll = async () => {
   setRelaunchButton(figma.currentPage, "figma-i18next", {
     description: "🔍 Update text",
   });
 
-  updateAllTextProperty().then(() => {
-    figma.closePlugin("Updated 🎉");
-  });
-}
+  await initLanguageStorage();
+  await updateAllTextProperty();
+  await figma.closePlugin("Updated 🎉");
+};
+
+export default updateAll;
 
 export { updateAllTextProperty };
