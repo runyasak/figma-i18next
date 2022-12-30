@@ -1,9 +1,6 @@
-import { setRelaunchButton } from "@create-figma-plugin/utilities";
-import { initLanguageStorage } from "./languageStorage";
-
 import { TText } from "./tText";
 import i18next from "i18next";
-import { i18nInit } from "./i18nUtility";
+import { getLanguageArray, getLanguages } from "./languageStorage";
 
 export async function loadFont(text: TextNode) {
   const font = <FontName>text.fontName;
@@ -14,7 +11,7 @@ type TTextByLanguage = {
   [key in "en" | "th"]?: TText[];
 };
 
-function findAllText(): TTextByLanguage {
+function findAllTextNode(): TTextByLanguage {
   let tTextByLanguage: TTextByLanguage = {
     en: [],
     th: [],
@@ -54,7 +51,9 @@ async function updateValue(tText: TText) {
 }
 
 async function updateAllTextProperty() {
-  const tTextByLanguages: TTextByLanguage = findAllText();
+  console.log("array", getLanguageArray());
+  console.log("languages", getLanguages());
+  const tTextByLanguages: TTextByLanguage = findAllTextNode();
   const allTextOrderByLanguage = [
     ...(tTextByLanguages["th"] ? tTextByLanguages["th"] : []),
     ...(tTextByLanguages["en"] ? tTextByLanguages["en"] : []),
@@ -68,3 +67,5 @@ async function updateAllTextProperty() {
 }
 
 export { updateAllTextProperty };
+
+export type { TTextByLanguage };

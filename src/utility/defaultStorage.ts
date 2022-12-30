@@ -3,7 +3,7 @@ import { Resource } from "i18next";
 // reference
 // https://applelocalization.com/?q=back&l=English&l=Thai
 
-export const defaultLanguageStorage: Resource = {
+const defaule_en = {
   en: {
     translation: {
       hello: "Hello",
@@ -27,6 +27,9 @@ export const defaultLanguageStorage: Resource = {
       },
     },
   },
+};
+
+const defaule_th = {
   th: {
     translation: {
       hello: "สวัสดี",
@@ -51,3 +54,8 @@ export const defaultLanguageStorage: Resource = {
     },
   },
 };
+
+export const defaultLanguageStorage: Resource = Object.assign(
+  {},
+  ...[defaule_en, defaule_th]
+);
