@@ -20,7 +20,8 @@ import { Component } from "./page/Component";
 import { CloseHandler, CreateRectanglesHandler } from "./types";
 
 function Plugin() {
-  const [currentTab, setCurrentTab] = useState("Layers");
+  // const [currentTab, setCurrentTab] = useState("Layers");
+  const [currentTab, setCurrentTab] = useState("Library");
   const [languages, setLanguages] = useState([]);
 
   function handleChange(event: JSX.TargetedEvent<HTMLInputElement>) {
@@ -51,7 +52,9 @@ function Plugin() {
   ];
 
   onmessage = (event) => {
-    setLanguages(event.data.pluginMessage.Languages);
+    console.log("Receive message from Plugin");
+    setLanguages(event.data.pluginMessage.languages);
+    console.log("Message:", languages);
   };
 
   return <Tabs onChange={handleChange} options={options} value={currentTab} />;

@@ -1,4 +1,6 @@
 import { h } from "preact";
+import styles from "../style.css";
+import { Language } from "../component/language";
 import {
   Columns,
   Container,
@@ -16,39 +18,28 @@ const pageTitle = {
   width: "268px",
 };
 
-const languageDescription = {
-  "justify-content": "unset",
-  width: "243px",
-};
-
 const Library = () => {
   return (
-    <Container space='medium'>
-      <VerticalSpace space='small' />
-      <Columns space='extraSmall'>
-        <MiddleAlign style={pageTitle}>Local library</MiddleAlign>
-        <IconButton
-          onClick={(e) => {
-            console.log("abc");
-          }}
-        >
-          <IconPlus32 />
-        </IconButton>
-      </Columns>
-      <Columns>
-        <IconCheckCircleFilled32 />
-        <MiddleAlign style={languageDescription}>
-          EN Language (4 Words)
-        </MiddleAlign>
-        <IconButton
-          onClick={(e) => {
-            console.log("abx");
-          }}
-        >
-          <IconAdjust32 />
-        </IconButton>
-      </Columns>
-    </Container>
+    <div>
+      <Container space='medium'>
+        <VerticalSpace space='small' />
+        <Columns space='extraSmall'>
+          <MiddleAlign style={pageTitle}>Local library</MiddleAlign>
+          <IconButton
+            onClick={(e) => {
+              console.log("abc");
+            }}
+          >
+            <IconPlus32 />
+          </IconButton>
+        </Columns>
+      </Container>
+      <Language
+        status='enable'
+        description='EN Language (5 Words)'
+        language='th'
+      />
+    </div>
   );
 };
 

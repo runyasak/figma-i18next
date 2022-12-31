@@ -16,4 +16,4 @@ const updateAll = async () => {
 
 export default updateAll;
 
-export { updateAllTextProperty };
+export { updateAllTextProperty, updateAll };
