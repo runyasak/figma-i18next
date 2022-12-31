@@ -35,15 +35,11 @@ function OrderTextNodeByLanguage(textNodes: Array<TextNode>): Array<TText> {
     tTextByLanguage[key] = [];
   });
 
-  console.log("x");
-
   //create tText and group by language
   textNodes.forEach((node) => {
     let tText = new TText(node);
     tTextByLanguage[tText.language]?.push(tText);
   });
-
-  console.log("y");
 
   // flatten tText
   let tTexts: Array<TText> = [];

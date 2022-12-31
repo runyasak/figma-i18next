@@ -11,4 +11,8 @@ export default function () {
     width: 340,
     height: 500,
   });
+
+  figma.ui.onmessage = (message, payload: any) => {
+    console.log("Plugin got Message:", message);
+  };
 }

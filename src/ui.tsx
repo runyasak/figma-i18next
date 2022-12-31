@@ -21,10 +21,14 @@ import { CloseHandler, CreateRectanglesHandler } from "./types";
 
 function Plugin() {
   const [currentTab, setCurrentTab] = useState("Layers");
+  const [languages, setLanguages] = useState([]);
 
   function handleChange(event: JSX.TargetedEvent<HTMLInputElement>) {
     const newValue = event.currentTarget.value;
+    console.log("UI Tab Change:", newValue);
     setCurrentTab(newValue);
+    const type = "CHANGE_TAB";
+    parent.postMessage({ pluginMessage: { type, newValue } }, "*");
   }
 
   const options: Array<TabsOption> = [
@@ -45,6 +49,10 @@ function Plugin() {
       value: "Setting",
     },
   ];
+
+  onmessage = (event) => {
+    setLanguages(event.data.pluginMessage.Languages);
+  };
 
   return <Tabs onChange={handleChange} options={options} value={currentTab} />;
 }
