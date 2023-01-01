@@ -2,6 +2,7 @@ import { h } from "preact";
 import styles from "../style.css";
 import { Language } from "../component/language";
 import { Languages } from "../utility/languageStorage";
+import { LanguageDetail } from "./languageDetail";
 import {
   Columns,
   Container,
@@ -23,39 +24,54 @@ const pageTitle = {
 const Library = (props: { languages: Languages }) => {
   const [currentLanguage, setCurrentLanguage] = useState("");
 
-  const handleItemClick = (language: string) => {
+  const handleItemClick = (language: string): void => {
     setCurrentLanguage(language);
+  };
+
+  const languageList = () => {
+    const list = props.languages.map((language) => {
+      return (
+        <Language
+          status='enable'
+          description={`${language.language} Language (5 Words)`}
+          language={language.language}
+          onDetailClick={handleItemClick}
+        />
+      );
+    });
+    return list;
+  };
+
+  const libraryPage = () => {
+    return (
+      <div>
+        <Container space='medium'>
+          <VerticalSpace space='small' />
+          <Columns space='extraSmall'>
+            <MiddleAlign style={pageTitle}>Local library</MiddleAlign>
+            <IconButton
+              onClick={(e) => {
+                console.log("abc");
+              }}
+            >
+              <IconPlus32 />
+            </IconButton>
+          </Columns>
+        </Container>
+        {languageList()}
+      </div>
+    );
   };
 
   return (
     <div>
       {currentLanguage === "" ? (
-        <div>
-          <Container space='medium'>
-            <VerticalSpace space='small' />
-            <Columns space='extraSmall'>
-              <MiddleAlign style={pageTitle}>Local library</MiddleAlign>
-              <IconButton
-                onClick={(e) => {
-                  console.log("abc");
-                }}
-              >
-                <IconPlus32 />
-              </IconButton>
-            </Columns>
-          </Container>
-          <Language
-            status='enable'
-            description='EN Language (5 Words)'
-            language='th'
-            onDetailClick={handleItemClick}
-          />
-        </div>
+        libraryPage()
       ) : (
-        <div>
-          Detail
-          <button onClick={() => handleItemClick("")}>th</button>
-        </div>
+        <LanguageDetail
+          language={currentLanguage}
+          onDetailClick={handleItemClick}
+        />
       )}
     </div>
   );
