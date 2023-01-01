@@ -1,3 +1,11 @@
+import { emit } from "@create-figma-plugin/utilities";
+import { h, JSX } from "preact";
+import { useState } from "preact/hooks";
+import { Layers } from "./page/layers";
+import { Setting } from "./page/setting";
+import { Library } from "./page/Library";
+import { Components } from "./page/components";
+// import { CloseHandler, CreateRectanglesHandler } from "./types";
 import {
   Button,
   Columns,
@@ -9,15 +17,6 @@ import {
   Tabs,
   TabsOption,
 } from "@create-figma-plugin/ui";
-import { emit } from "@create-figma-plugin/utilities";
-import { h, JSX } from "preact";
-import { useCallback, useState } from "preact/hooks";
-import { Layers } from "./page/layers";
-import { Setting } from "./page/setting";
-import { Library } from "./page/Library";
-import { Component } from "./page/Component";
-
-import { CloseHandler, CreateRectanglesHandler } from "./types";
 
 function Plugin() {
   // const [currentTab, setCurrentTab] = useState("Layers");
@@ -38,11 +37,11 @@ function Plugin() {
       value: "Layers",
     },
     {
-      children: <Component />,
+      children: <Components />,
       value: "Component",
     },
     {
-      children: <Library />,
+      children: <Library languages={languages} />,
       value: "Library",
     },
     {

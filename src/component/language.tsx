@@ -18,6 +18,7 @@ const Language = (props: {
   status: string;
   description: string;
   language: string;
+  onDetailClick: (language: string) => void;
 }) => {
   return (
     <Container space='extraSmall'>
@@ -30,7 +31,8 @@ const Language = (props: {
         </MiddleAlign>
         <IconButton
           onClick={(e) => {
-            console.log("abx");
+            console.log("click on th detail");
+            props.onDetailClick("th");
           }}
         >
           <IconAdjust32 />

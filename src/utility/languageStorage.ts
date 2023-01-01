@@ -1,6 +1,11 @@
 import { Resource, ResourceLanguage } from "i18next";
 import { defaultLanguageStorage } from "./defaultStorage";
 
+type Languages = {
+  language: string;
+  resourceLanguage: ResourceLanguage;
+}[];
+
 const storageKeys = {
   LANGUAGES: "LanguageStorage",
 };
@@ -15,10 +20,7 @@ const getLanguages = (): string[] => {
   return getLanguageArray().map((l) => l.language);
 };
 
-const getLanguageArray = (): {
-  language: string;
-  resourceLanguage: ResourceLanguage;
-}[] => {
+const getLanguageArray = (): Languages => {
   return Object.entries(languageResources).map(
     ([language, resourceLanguage]) => ({
       language,
@@ -56,3 +58,5 @@ export {
   getLanguageArray,
   getLanguages,
 };
+
+export type { Languages };
