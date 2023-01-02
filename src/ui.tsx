@@ -27,30 +27,12 @@ function Plugin() {
   // Post message to main
   function handleChange(event: JSX.TargetedEvent<HTMLInputElement>) {
     const newValue = event.currentTarget.value;
-    console.log("UI Tab Change:", newValue);
     setCurrentTab(newValue);
-
-    console.log("Post message to main:", newValue);
-
-    // Original
-    // const messageName = "CHANGE_TAB";
-    // parent.postMessage({ pluginMessage: { messageName, newValue } }, "*");
-
-    // New toy
     emit("CHANGE_TAB_2", newValue);
   }
 
   // Receive message from main
-
-  // Original
-  // onmessage = (event) => {
-  //   console.log("Receive message from main");
-  //   setLanguages(event.data.pluginMessage.languages);
-  //   console.log("Message:", languages);
-  // };
-
   const handleUpdateLanguage = (languages: any) => {
-    console.log("Receive message from main", languages);
     setLanguages(languages);
   };
   on("UPDATE_LANGUAGES", handleUpdateLanguage);

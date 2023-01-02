@@ -14,14 +14,6 @@ const initUIPlugin = async () => {
 
 // Post message to UI
 const updateLanguageToUI = () => {
-  console.log("Send message to UI:", getLanguageArray());
-
-  // Original
-  // const languageMessage = {
-  //   languages: getLanguageArray(),
-  // };
-  // figma.ui.postMessage(languagesMessage);
-
   emit("UPDATE_LANGUAGES", getLanguageArray());
 };
 
@@ -37,16 +29,7 @@ export default function () {
   });
 
   // Receive message from UI
-
-  // Original
-  // figma.ui.onmessage = (message, payload: any) => {
-  //   console.log("Recieve message from UI:", message);
-  //   updateLanguageToUI();
-  // };
-
-  // New toy
   const handleChageTab2 = (data: any) => {
-    console.log("Receive message from UI", data);
     updateLanguageToUI();
   };
   on("CHANGE_TAB_2", updateLanguageToUI);
