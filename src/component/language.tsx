@@ -30,9 +30,7 @@ const Language = (props: {
           {props.description}
         </MiddleAlign>
         <IconButton
-          onClick={(e) => {
-            props.onDetailClick("th");
-          }}
+          onClick={() => props.onDetailClick(props.language) }
         >
           <IconAdjust32 />
         </IconButton>
