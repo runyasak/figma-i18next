@@ -31,7 +31,6 @@ const Language = (props: {
         </MiddleAlign>
         <IconButton
           onClick={(e) => {
-            console.log("click on th detail");
             props.onDetailClick("th");
           }}
         >

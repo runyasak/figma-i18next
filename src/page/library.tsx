@@ -7,12 +7,9 @@ import {
   Columns,
   Container,
   VerticalSpace,
-  Text,
   IconButton,
   IconPlus32,
   MiddleAlign,
-  IconCheckCircleFilled32,
-  IconAdjust32,
 } from "@create-figma-plugin/ui";
 import { useState } from "preact/hooks";
 
@@ -28,53 +25,50 @@ const Library = (props: { languages: Languages }) => {
     setCurrentLanguage(language);
   };
 
-  const languageList = () => {
-    const list = props.languages.map((language) => {
-      return (
-        <Language
-          status='enable'
-          description={`${language.language} Language (5 Words)`}
-          language={language.language}
-          onDetailClick={handleItemClick}
-        />
-      );
-    });
-    return list;
-  };
-
-  const libraryPage = () => {
+  const header = () => {
     return (
-      <div>
-        <Container space='medium'>
-          <VerticalSpace space='small' />
-          <Columns space='extraSmall'>
-            <MiddleAlign style={pageTitle}>Local library</MiddleAlign>
-            <IconButton
-              onClick={(e) => {
-                console.log("abc");
-              }}
-            >
-              <IconPlus32 />
-            </IconButton>
-          </Columns>
-        </Container>
-        {languageList()}
-      </div>
+      <Container space='medium'>
+        <VerticalSpace space='small' />
+        <Columns space='extraSmall'>
+          <MiddleAlign style={pageTitle}>Local library</MiddleAlign>
+          <IconButton
+            onClick={(e) => {
+              console.log("abcx");
+            }}
+          >
+            <IconPlus32 />
+          </IconButton>
+        </Columns>
+      </Container>
     );
   };
 
-  return (
-    <div>
-      {currentLanguage === "" ? (
-        libraryPage()
-      ) : (
-        <LanguageDetail
-          language={currentLanguage}
-          onDetailClick={handleItemClick}
-        />
-      )}
-    </div>
-  );
+  const languageList = () => {
+    return props.languages.map((language) => (
+      <Language
+        status='enable'
+        description={`${language.language} Language (5 Words)`}
+        language={language.language}
+        onDetailClick={handleItemClick}
+      />
+    ));
+  };
+
+  if (currentLanguage === "") {
+    return (
+      <div>
+        {header()}
+        {languageList()}
+      </div>
+    );
+  } else {
+    return (
+      <LanguageDetail
+        language={currentLanguage}
+        onDetailClick={handleItemClick}
+      />
+    );
+  }
 };
 
 export { Library };
