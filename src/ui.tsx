@@ -32,10 +32,9 @@ function Plugin() {
   }
 
   // Receive message from main
-  const handleUpdateLanguage = (languages: any) => {
+  on("UPDATE_LANGUAGES", (languages: any) => {
     setLanguages(languages);
-  };
-  on("UPDATE_LANGUAGES", handleUpdateLanguage);
+  });
 
   const options: Array<TabsOption> = [
     {

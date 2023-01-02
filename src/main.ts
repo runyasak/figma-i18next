@@ -29,8 +29,7 @@ export default function () {
   });
 
   // Receive message from UI
-  const handleChageTab2 = (data: any) => {
+  on("CHANGE_TAB_2", (data: any) => {
     updateLanguageToUI();
-  };
-  on("CHANGE_TAB_2", updateLanguageToUI);
+  });
 }
