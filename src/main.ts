@@ -1,4 +1,4 @@
-import { once, showUI } from "@create-figma-plugin/utilities";
+import { emit, once, on, showUI } from "@create-figma-plugin/utilities";
 import { CloseHandler } from "./types";
 import {
   getLanguageArray,
@@ -7,17 +7,22 @@ import {
 import { updateAll } from "./updateText";
 import { i18nInit } from "./utility/i18nUtility";
 
-const updateLanguageToUI = () => {
-  const languages = {
-    languages: getLanguageArray(),
-  };
-  console.log("Send message to UI:", languages);
-  figma.ui.postMessage(languages);
-};
-
 const initUIPlugin = async () => {
   await initLanguageStorage();
   await i18nInit();
+};
+
+// Post message to UI
+const updateLanguageToUI = () => {
+  console.log("Send message to UI:", getLanguageArray());
+
+  // Original
+  // const languageMessage = {
+  //   languages: getLanguageArray(),
+  // };
+  // figma.ui.postMessage(languagesMessage);
+
+  emit("UPDATE_LANGUAGES", getLanguageArray());
 };
 
 export default function () {
@@ -31,8 +36,18 @@ export default function () {
     height: 500,
   });
 
-  figma.ui.onmessage = (message, payload: any) => {
-    console.log("Plugin got Message:", message);
+  // Receive message from UI
+
+  // Original
+  // figma.ui.onmessage = (message, payload: any) => {
+  //   console.log("Recieve message from UI:", message);
+  //   updateLanguageToUI();
+  // };
+
+  // New toy
+  const handleChageTab2 = (data: any) => {
+    console.log("Receive message from UI", data);
     updateLanguageToUI();
   };
+  on("CHANGE_TAB_2", updateLanguageToUI);
 }
