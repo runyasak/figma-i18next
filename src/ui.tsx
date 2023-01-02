@@ -28,6 +28,7 @@ function Plugin() {
   // Receive message from main
   on("UPDATE_LANGUAGES", (languages: any) => {
     setLanguages(languages);
+    console.log("languages:", languages);
   });
 
   const options: Array<TabsOption> = [

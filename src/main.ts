@@ -10,6 +10,7 @@ import { i18nInit } from "./utility/i18nUtility";
 const initUIPlugin = async () => {
   await initLanguageStorage();
   await i18nInit();
+  await updateLanguageToUI();
 };
 
 // Post message to UI
@@ -23,13 +24,13 @@ export default function () {
     figma.closePlugin();
   });
 
-  showUI({
-    width: 340,
-    height: 500,
-  });
-
   // Receive message from UI
   on("CHANGE_TAB", (data: any) => {
     updateLanguageToUI();
+  });
+
+  showUI({
+    width: 340,
+    height: 500,
   });
 }

@@ -3,6 +3,7 @@
 }
 
 .applicationBar {
+  padding: 0 var(--space-small);
   height: 40px;
   flex-direction: row;
   justify-content: left;

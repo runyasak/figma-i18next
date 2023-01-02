@@ -1,6 +1,5 @@
 import {
   Button,
-  Columns,
   Container,
   Divider,
   Dropdown,
@@ -8,11 +7,8 @@ import {
   IconButton,
   IconChevronLeft32,
   IconTrash32,
-  MiddleAlign,
-  Text,
   Textbox,
   TextboxMultiline,
-  useInitialFocus,
   VerticalSpace,
 } from "@create-figma-plugin/ui";
 import style from "../style.css";
@@ -38,6 +34,12 @@ const LanguageDetail = (props: {
     setValue(newValue);
   }
 
+  function handleInput2(event: JSX.TargetedEvent<HTMLInputElement>) {
+    const newValue = event.currentTarget.value;
+    console.log(newValue);
+    setValue(newValue);
+  }
+
   function handleClick(event: JSX.TargetedMouseEvent<HTMLButtonElement>) {
     console.log(event);
   }
@@ -50,7 +52,6 @@ const LanguageDetail = (props: {
 
   return (
     <div class={style.detailPage}>
-      {/* <button onClick={() => props.onDetailClick("")}>Go Back</button> */}
       <div class={style.applicationBar}>
         <IconButton onClick={() => props.onDetailClick("")}>
           <IconChevronLeft32 />
@@ -63,10 +64,9 @@ const LanguageDetail = (props: {
         <div class={style.textField}>
           <div class={style.label}>Language</div>
           <div class={style.textBox}>
-            <Dropdown
-              onChange={handleChange}
-              options={options}
-              value={"th"}
+            <Textbox
+              onInput={handleInput2}
+              value={textValue}
               variant='border'
             />
           </div>
