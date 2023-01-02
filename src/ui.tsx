@@ -7,11 +7,12 @@ import { Library } from "./page/Library";
 import { Components } from "./page/components";
 import { render, Tabs, TabsOption } from "@create-figma-plugin/ui";
 import { LanguageDetail } from "./page/languageDetail";
+import { Languages } from "./utility/languageStorage";
 
 function Plugin() {
   // const [currentTab, setCurrentTab] = useState("Layers");
   const [currentTab, setCurrentTab] = useState("Library");
-  const [languages, setLanguages] = useState([]);
+  const [languageArray, setLanguageArray] = useState<Languages>([]);
   const [languagePage, setLanguagePage] = useState("");
 
   const handleItemClick = (language: string): void => {
@@ -27,8 +28,8 @@ function Plugin() {
 
   // Receive message from main
   on("UPDATE_LANGUAGES", (languages: any) => {
-    setLanguages(languages);
-    console.log("languages:", languages);
+    setLanguageArray(languages);
+    console.log("Receive languages:", languages);
   });
 
   const options: Array<TabsOption> = [
@@ -42,7 +43,10 @@ function Plugin() {
     },
     {
       children: (
-        <Library languages={languages} onDetailClick={handleItemClick} />
+        <Library
+          languageArray={languageArray}
+          onDetailClick={handleItemClick}
+        />
       ),
       value: "Library",
     },
@@ -54,7 +58,11 @@ function Plugin() {
 
   if (languagePage !== "") {
     return (
-      <LanguageDetail language={languagePage} onDetailClick={handleItemClick} />
+      <LanguageDetail
+        languageName={languagePage}
+        languageArray={languageArray}
+        onDetailClick={handleItemClick}
+      />
     );
   }
 

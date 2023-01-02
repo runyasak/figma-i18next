@@ -17,10 +17,10 @@
   flex-grow: 1;
 }
 
-.ghost32x32 {
+/* .ghost32x32 {
   width: 32px;
   height: 32px;
-}
+} */
 
 .textField {
   display: flex;
@@ -41,7 +41,7 @@
 .footer {
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  justify-content: right;
 }
 
 .detailPage {

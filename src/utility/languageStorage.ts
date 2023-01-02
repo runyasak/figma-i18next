@@ -16,7 +16,7 @@ const getLanguageResource = (): Resource => {
   return languageResources;
 };
 
-const getLanguages = (): string[] => {
+const getLanguageNames = (): string[] => {
   return getLanguageArray().map((l) => l.language);
 };
 
@@ -44,19 +44,11 @@ const initLanguageStorage = async () => {
   }
 };
 
-// function loadIntepolation(lang: string): ResourceLanguage {
-//   if (languageResources[lang] != undefined) {
-//     return languageResources[lang];
-//   } else {
-//     return {};
-//   }
-// }
-
 export {
   initLanguageStorage,
   getLanguageResource,
   getLanguageArray,
-  getLanguages,
+  getLanguageNames,
 };
 
 export type { Languages };

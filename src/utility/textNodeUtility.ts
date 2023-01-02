@@ -1,6 +1,6 @@
 import { TText } from "./tText";
 import i18next from "i18next";
-import { getLanguageArray, getLanguages } from "./languageStorage";
+import { getLanguageNames } from "./languageStorage";
 
 export async function loadFont(text: TextNode) {
   const font = <FontName>text.fontName;
@@ -28,7 +28,7 @@ const findAllTextNode = (): Array<TextNode> => {
 
 function OrderTextNodeByLanguage(textNodes: Array<TextNode>): Array<TText> {
   let tTextByLanguage: TTextByLanguage = {};
-  const languages = getLanguages();
+  const languages = getLanguageNames();
 
   //prepare group
   languages.forEach((key) => {

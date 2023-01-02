@@ -14,13 +14,24 @@ import {
 import style from "../style.css";
 import { h, JSX } from "preact";
 import { useState } from "preact/hooks";
+import { Languages } from "../utility/languageStorage";
+import { ResourceKey } from "i18next";
 
 const LanguageDetail = (props: {
-  language: string;
+  languageName: string;
+  languageArray: Languages;
   onDetailClick: (language: string) => void;
 }) => {
   const [value, setValue] = useState<null | string>(null);
   const [textValue, setTextValue] = useState<string>("");
+  const [jsonObject, setJsonObject] = useState<any>({});
+  const [languageName, setlanguageName] = useState<string>(props.languageName);
+
+  const resource = props.languageArray.find(
+    (language) => language.language === props.languageName
+  );
+  setTextValue(JSON.stringify(resource?.resourceLanguage.translation, null, 2));
+  setJsonObject(resource?.resourceLanguage.translation);
 
   function handleChange(event: JSX.TargetedEvent<HTMLInputElement>) {
     const newValue = event.currentTarget.value;
@@ -44,6 +55,16 @@ const LanguageDetail = (props: {
     console.log(event);
   }
 
+  // function editorDidMount(editor: any, monaco: any) {
+  //   console.log("editorDidMount", editor);
+  //   editor.focus();
+  // }
+  // function onChange(newValue: any, e) {
+  //   console.log("onChange", newValue, e);
+  // }
+
+  // create the editor
+
   const options: Array<DropdownOption> = [
     { value: "th" },
     { value: "en" },
@@ -56,17 +77,20 @@ const LanguageDetail = (props: {
         <IconButton onClick={() => props.onDetailClick("")}>
           <IconChevronLeft32 />
         </IconButton>
-        <div class={style.text}>Language ({props.language})</div>
-        <div class={style.ghost32x32}></div>
+        <div class={style.text}>Language ({props.languageName})</div>
+        <IconButton onClick={handleClick}>
+          <IconTrash32 />
+        </IconButton>
       </div>
       <Divider />
+      {/* <VerticalSpace space='extraSmall' /> */}
       <Container space='small'>
         <div class={style.textField}>
           <div class={style.label}>Language</div>
           <div class={style.textBox}>
             <Textbox
               onInput={handleInput2}
-              value={textValue}
+              value={languageName}
               variant='border'
             />
           </div>
@@ -79,16 +103,17 @@ const LanguageDetail = (props: {
             <Dropdown
               onChange={handleChange}
               options={options}
-              value={"th"}
+              value={"en"}
               variant='border'
             />
           </div>
         </div>
       </Container>
+      {/* <VerticalSpace space='extraSmall' /> */}
       <Divider />
       <div class={style.textArea}>
         <VerticalSpace space='small' />
-        Detail {props.language}
+        Detail {props.languageName}
         <VerticalSpace space='extraSmall' />
         <div class={style.textArea2}>
           <TextboxMultiline
@@ -104,9 +129,6 @@ const LanguageDetail = (props: {
       <Container space='small'>
         <VerticalSpace space='extraSmall' />
         <div class={style.footer}>
-          <IconButton onClick={handleClick}>
-            <IconTrash32 />
-          </IconButton>
           <Button onClick={handleClick}>Update</Button>
         </div>
         <VerticalSpace space='extraSmall' />

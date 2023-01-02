@@ -6,6 +6,7 @@ import {
   IconCheckCircleFilled32,
   MiddleAlign,
 } from "@create-figma-plugin/ui";
+import { ResourceLanguage } from "i18next";
 import { h, JSX } from "preact";
 import styles from "../style.css";
 
@@ -31,7 +32,7 @@ const Language = (props: {
         </MiddleAlign>
         <IconButton
           onClick={(e) => {
-            props.onDetailClick("th");
+            props.onDetailClick(props.language);
           }}
         >
           <IconAdjust32 />

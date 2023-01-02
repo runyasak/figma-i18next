@@ -14,17 +14,17 @@ import { useState } from "preact/hooks";
 
 const pageTitle = {
   "justify-content": "unset",
-  width: "268px",
+  width: "271px",
 };
 
 const Library = (props: {
-  languages: Languages;
+  languageArray: Languages;
   onDetailClick: (language: string) => void;
 }) => {
   const header = () => {
     return (
       <Container space='medium'>
-        <VerticalSpace space='small' />
+        <VerticalSpace space='extraSmall' />
         <Columns space='extraSmall'>
           <MiddleAlign style={pageTitle}>Local library</MiddleAlign>
           <IconButton
@@ -35,12 +35,13 @@ const Library = (props: {
             <IconPlus32 />
           </IconButton>
         </Columns>
+        <VerticalSpace space='extraSmall' />
       </Container>
     );
   };
 
   const languageList = () => {
-    return props.languages.map((language) => (
+    return props.languageArray.map((language) => (
       <Language
         status='enable'
         description={`${language.language} Language (5 Words)`}
