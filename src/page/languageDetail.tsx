@@ -13,7 +13,8 @@ import {
 } from "@create-figma-plugin/ui";
 import style from "../style.css";
 import { h, JSX } from "preact";
-import { useState } from "preact/hooks";
+import { useMemo, useState } from "preact/hooks";
+import { defaultLanguageStorage } from "../utility/defaultStorage";
 
 const LanguageDetail = (props: {
   language: string;
@@ -21,6 +22,11 @@ const LanguageDetail = (props: {
 }) => {
   const [value, setValue] = useState<null | string>(null);
   const [textValue, setTextValue] = useState<string>("");
+
+  const localeData = useMemo(
+    () => JSON.stringify(defaultLanguageStorage[props.language].translation, null, 4),
+    [props.language],
+  )
 
   function handleChange(event: JSX.TargetedEvent<HTMLInputElement>) {
     const newValue = event.currentTarget.value;
@@ -93,7 +99,7 @@ const LanguageDetail = (props: {
         <div class={style.textArea2}>
           <TextboxMultiline
             onInput={handleInput}
-            value={textValue}
+            value={localeData}
             rows={17}
             variant='border'
           />
