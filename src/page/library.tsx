@@ -2,7 +2,6 @@ import { h } from "preact";
 import styles from "../style.css";
 import { Language } from "../component/language";
 import { Languages } from "../utility/languageStorage";
-import { LanguageDetail } from "./languageDetail";
 import {
   Columns,
   Container,
@@ -18,13 +17,10 @@ const pageTitle = {
   width: "268px",
 };
 
-const Library = (props: { languages: Languages }) => {
-  const [currentLanguage, setCurrentLanguage] = useState("");
-
-  const handleItemClick = (language: string): void => {
-    setCurrentLanguage(language);
-  };
-
+const Library = (props: {
+  languages: Languages;
+  onDetailClick: (language: string) => void;
+}) => {
   const header = () => {
     return (
       <Container space='medium'>
@@ -49,26 +45,17 @@ const Library = (props: { languages: Languages }) => {
         status='enable'
         description={`${language.language} Language (5 Words)`}
         language={language.language}
-        onDetailClick={handleItemClick}
+        onDetailClick={props.onDetailClick}
       />
     ));
   };
 
-  if (currentLanguage === "") {
-    return (
-      <div>
-        {header()}
-        {languageList()}
-      </div>
-    );
-  } else {
-    return (
-      <LanguageDetail
-        language={currentLanguage}
-        onDetailClick={handleItemClick}
-      />
-    );
-  }
+  return (
+    <div>
+      {header()}
+      {languageList()}
+    </div>
+  );
 };
 
 export { Library };
