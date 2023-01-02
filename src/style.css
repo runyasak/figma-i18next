@@ -1,3 +1,60 @@
 .enableIcon {
   color: var(--figma-color-icon-brand);
 }
+
+.applicationBar {
+  height: 40px;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  width: 100%;
+  display: flex;
+}
+
+.applicationBar .text {
+  text-align: center;
+  flex-grow: 1;
+}
+
+.ghost32x32 {
+  width: 32px;
+  height: 32px;
+}
+
+.textField {
+  display: flex;
+  width: 100%;
+  justify-content: left;
+  align-items: center;
+  height: 40px;
+}
+
+.textField .label {
+  width: 100px;
+}
+
+.textField .textBox {
+  flex-grow: 1;
+}
+
+.footer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.detailPage {
+  display: flex;
+  flex-direction: column;
+}
+
+.detailPage .textArea {
+  padding: 0 var(--space-small);
+  height: 328px;
+  display: flex;
+  flex-direction: column;
+}
+
+.detailPage .textArea .textArea2 {
+  height: 100%;
+}

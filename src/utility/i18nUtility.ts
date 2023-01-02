@@ -3,7 +3,7 @@ import { getLanguageResource } from "./languageStorage";
 
 async function i18nInit() {
   i18next.init({
-    compatibilityJSON: "v4",
+    compatibilityJSON: "v3",
     fallbackLng: ["en"],
     debug: true,
     resources: getLanguageResource(),

@@ -8,7 +8,6 @@ const default_en = {
     translation: {
       hello: "Hello",
       contacts: "Contacts",
-
       general: {
         back: "Back",
         done: "Done",
@@ -34,7 +33,6 @@ const default_th = {
     translation: {
       hello: "สวัสดี",
       contacts: "รายชื่อ",
-
       general: {
         back: "ย้อนกลับ",
         done: "เสร็จสิ้น",
@@ -60,7 +58,6 @@ const default_jp = {
     translation: {
       hello: "こんにちは",
       contacts: "連絡先",
-
       general: {
         back: "戻る",
         done: "完了",

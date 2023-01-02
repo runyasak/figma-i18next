@@ -5,19 +5,7 @@ import { Layers } from "./page/layers";
 import { Setting } from "./page/setting";
 import { Library } from "./page/Library";
 import { Components } from "./page/components";
-import { Languages } from "./utility/languageStorage";
-// import { CloseHandler, CreateRectanglesHandler } from "./types";
-import {
-  Button,
-  Columns,
-  Container,
-  render,
-  Text,
-  TextboxNumeric,
-  VerticalSpace,
-  Tabs,
-  TabsOption,
-} from "@create-figma-plugin/ui";
+import { render, Tabs, TabsOption } from "@create-figma-plugin/ui";
 import { LanguageDetail } from "./page/languageDetail";
 
 function Plugin() {
@@ -68,6 +56,7 @@ function Plugin() {
       <LanguageDetail language={languagePage} onDetailClick={handleItemClick} />
     );
   }
+
   return <Tabs onChange={handleChange} options={options} value={currentTab} />;
 }
 
