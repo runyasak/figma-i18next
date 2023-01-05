@@ -47,15 +47,17 @@
 .detailPage {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .detailPage .textArea {
   padding: 0 var(--space-small);
   height: 328px;
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
 }
 
 .detailPage .textArea .textArea2 {
-  height: 100%;
+  flex-grow: 1;
 }

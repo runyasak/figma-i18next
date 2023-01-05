@@ -6,7 +6,7 @@ import { Setting } from "./page/setting";
 import { Library } from "./page/Library";
 import { Components } from "./page/components";
 import { render, Tabs, TabsOption } from "@create-figma-plugin/ui";
-import { LanguageDetail } from "./page/languageDetail";
+import { LanguageDetail } from "./page/libraryDetail";
 import { Languages } from "./utility/languageStorage";
 
 function Plugin() {

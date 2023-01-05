@@ -27,9 +27,7 @@ const LanguageDetail = (props: {
   const [jsonObject, setJsonObject] = useState<any>({});
   const [languageName, setlanguageName] = useState<string>(props.languageName);
 
-  const resource = props.languageArray.find(
-    (language) => language.language === props.languageName
-  );
+  const resource = props.languageArray.find((language) => language.language === props.languageName);
   setTextValue(JSON.stringify(resource?.resourceLanguage.translation, null, 2));
   setJsonObject(resource?.resourceLanguage.translation);
 
@@ -65,12 +63,6 @@ const LanguageDetail = (props: {
 
   // create the editor
 
-  const options: Array<DropdownOption> = [
-    { value: "th" },
-    { value: "en" },
-    { value: "jp" },
-  ];
-
   return (
     <div class={style.detailPage}>
       <div class={style.applicationBar}>
@@ -84,54 +76,31 @@ const LanguageDetail = (props: {
       </div>
       <Divider />
       {/* <VerticalSpace space='extraSmall' /> */}
-      <Container space='small'>
+      <Container space="small">
         <div class={style.textField}>
           <div class={style.label}>Language</div>
           <div class={style.textBox}>
-            <Textbox
-              onInput={handleInput2}
-              value={languageName}
-              variant='border'
-            />
+            <Textbox onInput={handleInput2} value={languageName} variant="border" />
           </div>
         </div>
       </Container>
-      <Container space='small'>
-        <div class={style.textField}>
-          <div class={style.label}>Fall back</div>
-          <div class={style.textBox}>
-            <Dropdown
-              onChange={handleChange}
-              options={options}
-              value={"en"}
-              variant='border'
-            />
-          </div>
-        </div>
-      </Container>
-      {/* <VerticalSpace space='extraSmall' /> */}
       <Divider />
       <div class={style.textArea}>
-        <VerticalSpace space='small' />
+        <VerticalSpace space="small" />
         Detail {props.languageName}
-        <VerticalSpace space='extraSmall' />
+        <VerticalSpace space="extraSmall" />
         <div class={style.textArea2}>
-          <TextboxMultiline
-            onInput={handleInput}
-            value={textValue}
-            rows={17}
-            variant='border'
-          />
+          <TextboxMultiline onInput={handleInput} value={textValue} rows={20} variant="border" />
         </div>
-        <VerticalSpace space='extraSmall' />
+        <VerticalSpace space="extraSmall" />
       </div>
       <Divider />
-      <Container space='small'>
-        <VerticalSpace space='extraSmall' />
+      <Container space="small">
+        <VerticalSpace space="extraSmall" />
         <div class={style.footer}>
           <Button onClick={handleClick}>Update</Button>
         </div>
-        <VerticalSpace space='extraSmall' />
+        <VerticalSpace space="extraSmall" />
       </Container>
     </div>
   );

@@ -4,7 +4,6 @@ import {
   getLanguageArray,
   initLanguageStorage,
 } from "./utility/languageStorage";
-import { updateAll } from "./updateText";
 import { i18nInit } from "./utility/i18nUtility";
 
 const initUIPlugin = async () => {
