@@ -11,7 +11,7 @@ const updateAll = async () => {
   await initLanguageStorage();
   await i18nInit();
   await updateAllTextProperty();
-  await figma.closePlugin("Updated 🎉");
+  figma.closePlugin("Updated 🎉");
 };
 
 export default updateAll;

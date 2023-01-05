@@ -56,7 +56,7 @@ async function updateValue(tText: TText) {
   const textNode = tText.node;
   const translate = tText.key;
 
-  if (i18next.language != tText.language) {
+  if (i18next.language !== tText.language) {
     i18next.changeLanguage(tText.language, (err, t) => {
       if (err) console.log("Error:", err);
     });
@@ -70,11 +70,11 @@ async function updateValue(tText: TText) {
   }
 }
 
-async function updateAllTextProperty() {
+function updateAllTextProperty() {
   const allTextNode = findAllTextNode();
   const allTextOrderByLanguage = OrderTextNodeByLanguage(allTextNode);
 
-  await Promise.all(
+  return Promise.all(
     allTextOrderByLanguage.map((tText) => {
       return updateValue(tText);
     })

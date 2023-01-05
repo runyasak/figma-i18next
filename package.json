@@ -3,7 +3,6 @@
     "@create-figma-plugin/ui": "^2.0.1",
     "@create-figma-plugin/utilities": "^2.0.1",
     "i18next": "^21.8.9",
-    "jsoneditor": "^9.9.2",
     "preact": "^10"
   },
   "devDependencies": {

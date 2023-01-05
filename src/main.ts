@@ -10,7 +10,7 @@ import { i18nInit } from "./utility/i18nUtility";
 const initUIPlugin = async () => {
   await initLanguageStorage();
   await i18nInit();
-  await updateLanguageToUI();
+  updateLanguageToUI();
 };
 
 // Post message to UI
