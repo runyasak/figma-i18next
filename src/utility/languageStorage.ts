@@ -31,11 +31,20 @@ const getLanguageArray = (): Languages => {
   );
 };
 
+const saveLanguageResouceToStorage = async () => {
+  await figma.clientStorage.setAsync(storageKeys.LANGUAGES, languageResources);
+}
+
+const setLanguageResource = (language:Language) => {
+  languageResources[language.language] = language.resourceLanguage
+  saveLanguageResouceToStorage();
+}
+
 const initLanguageStorage = async () => {
   let languageStorage = await figma.clientStorage.getAsync(
     storageKeys.LANGUAGES
   );
-
+  
   if (typeof languageStorage === "undefined") {
     languageResources = defaultLanguageStorage;
     await figma.clientStorage.setAsync(
@@ -43,8 +52,7 @@ const initLanguageStorage = async () => {
       defaultLanguageStorage
     );
   } else {
-    languageResources = defaultLanguageStorage;
-    // languageResources = languageStorage;
+    languageResources = languageStorage;
   }
 };
 
@@ -53,6 +61,7 @@ export {
   getLanguageResource,
   getLanguageArray,
   getLanguageNames,
+  setLanguageResource
 };
 
 export type { Languages, Language };

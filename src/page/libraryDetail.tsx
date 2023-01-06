@@ -8,26 +8,27 @@ import {
   Textbox,
   TextboxMultiline,
   VerticalSpace,
-} from "@create-figma-plugin/ui";
-import style from "../style.css";
-import { h, JSX } from "preact";
-import { useState } from "preact/hooks";
-import { Language } from "../utility/languageStorage";
-import { ResourceKey } from "i18next";
-import { useEffect } from "preact/hooks";
+} from '@create-figma-plugin/ui';
+import style from '../style.css';
+import { h, JSX } from 'preact';
+import { useState } from 'preact/hooks';
+import { Language } from '../utility/languageStorage';
+import { useEffect } from 'preact/hooks';
+import { emit } from '@create-figma-plugin/utilities';
+import { ResourceKey } from 'i18next';
 
 const LanguageDetail = (props: {
   language: Language;
   onDetailClick: (language: string) => void;
 }) => {
-  const [jsonText, setJsonText] = useState<string>("");
+  const [jsonText, setJsonText] = useState<string>('');
   const [languageName, setlanguageName] = useState<string>(
     props.language.language
   );
 
   useEffect(() => {
     setJsonText(
-      JSON.stringify(props.language.resourceLanguage["translation"], null, 2)
+      JSON.stringify(props.language.resourceLanguage['translation'], null, 2)
     );
   }, []);
 
@@ -50,7 +51,7 @@ const LanguageDetail = (props: {
   const handleDeleteClick = (
     event: JSX.TargetedMouseEvent<HTMLButtonElement>
   ) => {
-    console.log("Delete");
+    console.log('Delete');
     console.log(event);
   };
 
@@ -58,14 +59,15 @@ const LanguageDetail = (props: {
     event: JSX.TargetedMouseEvent<HTMLButtonElement>
   ) => {
     console.log(event);
-    props.language.resourceLanguage["translation"] = JSON.parse(jsonText);
+    props.language.resourceLanguage['translation'] = JSON.parse(jsonText);
+    emit('SAVE_LANGUAGE', props.language);
   };
 
   // create the editor
 
   const header = (
     <div class={style.applicationBar}>
-      <IconButton onClick={() => props.onDetailClick("")}>
+      <IconButton onClick={() => props.onDetailClick('')}>
         <IconChevronLeft32 />
       </IconButton>
       <div class={style.text}>Language: {languageName}</div>

@@ -4,6 +4,7 @@ import {
   getLanguageArray,
   initLanguageStorage,
 } from "./utility/languageStorage";
+import { Language, setLanguageResource } from "./utility/languageStorage";
 import { i18nInit } from "./utility/i18nUtility";
 
 const initUIPlugin = async () => {
@@ -19,13 +20,19 @@ const updateLanguageToUI = () => {
 
 export default function () {
   initUIPlugin();
+  
   once<CloseHandler>("CLOSE", function () {
     figma.closePlugin();
   });
 
   // Receive message from UI
-  on("CHANGE_TAB", (data: any) => {
-    updateLanguageToUI();
+  // on("CHANGE_TAB", (data: any) => {
+  //   updateLanguageToUI();
+  // });
+  
+  on("SAVE_LANGUAGE", (language:Language) => {
+    console.log("Receive SAVE", language);
+    setLanguageResource(language);
   });
 
   showUI({
