@@ -1,10 +1,12 @@
 import { Resource, ResourceLanguage } from "i18next";
 import { defaultLanguageStorage } from "./defaultStorage";
 
-type Languages = {
+type Language = {
   language: string;
   resourceLanguage: ResourceLanguage;
-}[];
+};
+
+type Languages = Language[];
 
 const storageKeys = {
   LANGUAGES: "LanguageStorage",
@@ -35,12 +37,14 @@ const initLanguageStorage = async () => {
   );
 
   if (typeof languageStorage === "undefined") {
+    languageResources = defaultLanguageStorage;
     await figma.clientStorage.setAsync(
       storageKeys.LANGUAGES,
       defaultLanguageStorage
     );
   } else {
     languageResources = defaultLanguageStorage;
+    // languageResources = languageStorage;
   }
 };
 
@@ -51,4 +55,4 @@ export {
   getLanguageNames,
 };
 
-export type { Languages };
+export type { Languages, Language };

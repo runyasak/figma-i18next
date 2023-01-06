@@ -2,8 +2,6 @@ import {
   Button,
   Container,
   Divider,
-  Dropdown,
-  DropdownOption,
   IconButton,
   IconChevronLeft32,
   IconTrash32,
@@ -14,94 +12,122 @@ import {
 import style from "../style.css";
 import { h, JSX } from "preact";
 import { useState } from "preact/hooks";
-import { Languages } from "../utility/languageStorage";
+import { Language } from "../utility/languageStorage";
 import { ResourceKey } from "i18next";
+import { useEffect } from "preact/hooks";
 
 const LanguageDetail = (props: {
-  languageName: string;
-  languageArray: Languages;
+  language: Language;
   onDetailClick: (language: string) => void;
 }) => {
-  const [value, setValue] = useState<null | string>(null);
-  const [textValue, setTextValue] = useState<string>("");
-  const [jsonObject, setJsonObject] = useState<any>({});
-  const [languageName, setlanguageName] = useState<string>(props.languageName);
+  const [jsonText, setJsonText] = useState<string>("");
+  const [languageName, setlanguageName] = useState<string>(
+    props.language.language
+  );
 
-  const resource = props.languageArray.find((language) => language.language === props.languageName);
-  setTextValue(JSON.stringify(resource?.resourceLanguage.translation, null, 2));
-  setJsonObject(resource?.resourceLanguage.translation);
+  useEffect(() => {
+    setJsonText(
+      JSON.stringify(props.language.resourceLanguage["translation"], null, 2)
+    );
+  }, []);
 
-  function handleChange(event: JSX.TargetedEvent<HTMLInputElement>) {
+  // const updateLanguage = (lang: string, text: string) => {};
+
+  const handleResourceInput = (
+    event: JSX.TargetedEvent<HTMLTextAreaElement>
+  ) => {
     const newValue = event.currentTarget.value;
-    console.log(newValue);
-    setTextValue(newValue);
-  }
+    setJsonText(newValue);
+  };
 
-  function handleInput(event: JSX.TargetedEvent<HTMLTextAreaElement>) {
+  const handleLanguageNameInput = (
+    event: JSX.TargetedEvent<HTMLInputElement>
+  ) => {
     const newValue = event.currentTarget.value;
-    console.log(newValue);
-    setValue(newValue);
-  }
+    setlanguageName(newValue);
+  };
 
-  function handleInput2(event: JSX.TargetedEvent<HTMLInputElement>) {
-    const newValue = event.currentTarget.value;
-    console.log(newValue);
-    setValue(newValue);
-  }
-
-  function handleClick(event: JSX.TargetedMouseEvent<HTMLButtonElement>) {
+  const handleDeleteClick = (
+    event: JSX.TargetedMouseEvent<HTMLButtonElement>
+  ) => {
+    console.log("Delete");
     console.log(event);
-  }
+  };
 
-  // function editorDidMount(editor: any, monaco: any) {
-  //   console.log("editorDidMount", editor);
-  //   editor.focus();
-  // }
-  // function onChange(newValue: any, e) {
-  //   console.log("onChange", newValue, e);
-  // }
+  const handleSaveClick = (
+    event: JSX.TargetedMouseEvent<HTMLButtonElement>
+  ) => {
+    console.log(event);
+    props.language.resourceLanguage["translation"] = JSON.parse(jsonText);
+  };
 
   // create the editor
 
-  return (
-    <div class={style.detailPage}>
-      <div class={style.applicationBar}>
-        <IconButton onClick={() => props.onDetailClick("")}>
-          <IconChevronLeft32 />
-        </IconButton>
-        <div class={style.text}>Language ({props.languageName})</div>
-        <IconButton onClick={handleClick}>
-          <IconTrash32 />
-        </IconButton>
-      </div>
-      <Divider />
-      {/* <VerticalSpace space='extraSmall' /> */}
-      <Container space="small">
-        <div class={style.textField}>
-          <div class={style.label}>Language</div>
-          <div class={style.textBox}>
-            <Textbox onInput={handleInput2} value={languageName} variant="border" />
-          </div>
+  const header = (
+    <div class={style.applicationBar}>
+      <IconButton onClick={() => props.onDetailClick("")}>
+        <IconChevronLeft32 />
+      </IconButton>
+      <div class={style.text}>Language: {languageName}</div>
+      <IconButton onClick={handleDeleteClick}>
+        <IconTrash32 />
+      </IconButton>
+    </div>
+  );
+
+  const languageProperty = (
+    <Container space="small">
+      <div class={style.textField}>
+        <div class={style.label}>Language</div>
+        <div class={style.textBox}>
+          <Textbox
+            onInput={handleLanguageNameInput}
+            value={languageName}
+            variant="border"
+          />
         </div>
-      </Container>
-      <Divider />
+      </div>
+    </Container>
+  );
+
+  const languageCode = () => {
+    // const obj = props.language.resourceLanguage["translation"];
+
+    return (
       <div class={style.textArea}>
-        <VerticalSpace space="small" />
-        Detail {props.languageName}
         <VerticalSpace space="extraSmall" />
         <div class={style.textArea2}>
-          <TextboxMultiline onInput={handleInput} value={textValue} rows={20} variant="border" />
+          <TextboxMultiline
+            onInput={handleResourceInput}
+            value={jsonText}
+            rows={21}
+            variant="border"
+          />
         </div>
         <VerticalSpace space="extraSmall" />
       </div>
+    );
+  };
+
+  const footer = (
+    <Container space="small">
+      <VerticalSpace space="extraSmall" />
+      <div class={style.footer}>
+        <Button onClick={handleSaveClick}>Save</Button>
+      </div>
+      <VerticalSpace space="extraSmall" />
+    </Container>
+  );
+
+  return (
+    <div class={style.detailPage}>
+      {header}
       <Divider />
-      <Container space="small">
-        <VerticalSpace space="extraSmall" />
-        <div class={style.footer}>
-          <Button onClick={handleClick}>Update</Button>
-        </div>
-        <VerticalSpace space="extraSmall" />
-      </Container>
+      {languageProperty}
+      <Divider />
+      {languageCode()}
+      <Divider />
+      {footer}
     </div>
   );
 };
