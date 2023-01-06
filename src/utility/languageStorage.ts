@@ -40,6 +40,11 @@ const setLanguageResource = (language:Language) => {
   saveLanguageResouceToStorage();
 }
 
+const deleteLanguageResource = (languageName:string) => {
+  delete languageResources[languageName]
+  saveLanguageResouceToStorage();
+}
+
 const initLanguageStorage = async () => {
   let languageStorage = await figma.clientStorage.getAsync(
     storageKeys.LANGUAGES
@@ -61,7 +66,8 @@ export {
   getLanguageResource,
   getLanguageArray,
   getLanguageNames,
-  setLanguageResource
+  setLanguageResource,
+  deleteLanguageResource
 };
 
 export type { Languages, Language };

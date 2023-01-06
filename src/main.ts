@@ -3,6 +3,7 @@ import { CloseHandler } from "./types";
 import {
   getLanguageArray,
   initLanguageStorage,
+  deleteLanguageResource
 } from "./utility/languageStorage";
 import { Language, setLanguageResource } from "./utility/languageStorage";
 import { i18nInit } from "./utility/i18nUtility";
@@ -33,6 +34,12 @@ export default function () {
   on("SAVE_LANGUAGE", (language:Language) => {
     console.log("Receive SAVE", language);
     setLanguageResource(language);
+  });
+  
+  on("DELETE_LANGUAGE", (languageName:string) => {
+    console.log("Receive DELETE", languageName)
+    deleteLanguageResource(languageName);
+    updateLanguageToUI();
   });
 
   showUI({

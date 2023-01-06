@@ -1,4 +1,4 @@
-import { emit, once, on } from '@create-figma-plugin/utilities';
+import { on } from '@create-figma-plugin/utilities';
 import { h, JSX } from 'preact';
 import { useState } from 'preact/hooks';
 import { Layers } from './page/layers';

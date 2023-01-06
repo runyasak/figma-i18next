@@ -15,7 +15,6 @@ import { useState } from 'preact/hooks';
 import { Language } from '../utility/languageStorage';
 import { useEffect } from 'preact/hooks';
 import { emit } from '@create-figma-plugin/utilities';
-import { ResourceKey } from 'i18next';
 
 const LanguageDetail = (props: {
   language: Language;
@@ -48,17 +47,13 @@ const LanguageDetail = (props: {
     setlanguageName(newValue);
   };
 
-  const handleDeleteClick = (
-    event: JSX.TargetedMouseEvent<HTMLButtonElement>
-  ) => {
+  const handleDeleteClick = () => {
     console.log('Delete');
-    console.log(event);
+    emit('DELETE_LANGUAGE', languageName);
+    props.onDetailClick('');
   };
 
-  const handleSaveClick = (
-    event: JSX.TargetedMouseEvent<HTMLButtonElement>
-  ) => {
-    console.log(event);
+  const handleSaveClick = () => {
     props.language.resourceLanguage['translation'] = JSON.parse(jsonText);
     emit('SAVE_LANGUAGE', props.language);
   };

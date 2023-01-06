@@ -1,7 +1,8 @@
-import { h } from "preact";
+import { h } from 'preact';
+import { MiddleAlign } from '@create-figma-plugin/ui';
 
 const Setting = () => {
-  return <div>Setting</div>;
+  return <MiddleAlign>Soon</MiddleAlign>;
 };
 
 export { Setting };
