@@ -8,26 +8,26 @@ import {
   Textbox,
   TextboxMultiline,
   VerticalSpace,
-} from '@create-figma-plugin/ui';
-import style from '../style.css';
-import { h, JSX } from 'preact';
-import { useState } from 'preact/hooks';
-import { Language } from '../utility/languageStorage';
-import { useEffect } from 'preact/hooks';
-import { emit } from '@create-figma-plugin/utilities';
+} from "@create-figma-plugin/ui";
+import style from "../style.css";
+import { h, JSX } from "preact";
+import { useState } from "preact/hooks";
+import { Language } from "../utility/languageStorage";
+import { useEffect } from "preact/hooks";
+import { emit } from "@create-figma-plugin/utilities";
 
 const LanguageDetail = (props: {
   language: Language;
   onDetailClick: (language: string) => void;
 }) => {
-  const [jsonText, setJsonText] = useState<string>('');
+  const [jsonText, setJsonText] = useState<string>("");
   const [languageName, setlanguageName] = useState<string>(
     props.language.language
   );
 
   useEffect(() => {
     setJsonText(
-      JSON.stringify(props.language.resourceLanguage['translation'], null, 2)
+      JSON.stringify(props.language.resourceLanguage["translation"], null, 2)
     );
   }, []);
 
@@ -48,21 +48,25 @@ const LanguageDetail = (props: {
   };
 
   const handleDeleteClick = () => {
-    console.log('Delete');
-    emit('DELETE_LANGUAGE', languageName);
-    props.onDetailClick('');
+    console.log("Delete");
+    emit("DELETE_LANGUAGE", languageName);
+    props.onDetailClick("");
   };
 
   const handleSaveClick = () => {
-    props.language.resourceLanguage['translation'] = JSON.parse(jsonText);
-    emit('SAVE_LANGUAGE', props.language);
+    const currentLanguageName = props.language.language;
+    props.language.language = languageName;
+    props.language.resourceLanguage["translation"] = JSON.parse(jsonText);
+    console.log("handle save language:", props.language);
+    emit("SAVE_LANGUAGE", currentLanguageName, props.language);
+    props.onDetailClick("");
   };
 
   // create the editor
 
   const header = (
     <div class={style.applicationBar}>
-      <IconButton onClick={() => props.onDetailClick('')}>
+      <IconButton onClick={() => props.onDetailClick("")}>
         <IconChevronLeft32 />
       </IconButton>
       <div class={style.text}>Language: {languageName}</div>
