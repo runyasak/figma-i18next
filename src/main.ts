@@ -17,8 +17,9 @@ const initUIPlugin = async () => {
 
 // Post message to UI
 const updateLanguageToUI = () => {
-  console.log("Update Language To UI");
+  console.log("[Begin] Update Language Send to UI");
   emit("UPDATE_LANGUAGES", getLanguageArray());
+  console.log("[End] Update Language Send to UI");
 };
 
 export default function () {
@@ -27,11 +28,6 @@ export default function () {
   once<CloseHandler>("CLOSE", function () {
     figma.closePlugin();
   });
-
-  // Receive message from UI
-  // on("CHANGE_TAB", (data: any) => {
-  //   updateLanguageToUI();
-  // });
 
   on("SAVE_LANGUAGE", (currentLanguageName: string, language: Language) => {
     console.log("SAVE Language", language);
