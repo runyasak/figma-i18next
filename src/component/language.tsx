@@ -5,14 +5,13 @@ import {
   IconButton,
   IconCheckCircleFilled32,
   MiddleAlign,
-} from "@create-figma-plugin/ui";
-import { ResourceLanguage } from "i18next";
-import { h, JSX } from "preact";
-import styles from "../style.css";
+} from '@create-figma-plugin/ui';
+import { h } from 'preact';
+import styles from '../style.css';
 
 const languageDescription = {
-  "justify-content": "unset",
-  width: "243px",
+  'justify-content': 'unset',
+  width: '243px',
 };
 
 const Language = (props: {
@@ -22,14 +21,12 @@ const Language = (props: {
   onDetailClick: (language: string) => void;
 }) => {
   return (
-    <Container space='extraSmall'>
+    <Container space="extraSmall">
       <Columns>
         <div class={styles.enableIcon}>
           <IconCheckCircleFilled32 class={styles.enableIcon} />
         </div>
-        <MiddleAlign style={languageDescription}>
-          {props.description}
-        </MiddleAlign>
+        <MiddleAlign style={languageDescription}>{props.description}</MiddleAlign>
         <IconButton
           onClick={(e) => {
             props.onDetailClick(props.language);
