@@ -35,14 +35,11 @@ function Plugin() {
     setCurrentTab(newValue);
   }
 
-  // Receive message from main
-  once("UPDATE_LANGUAGES", (languages: any) => {
-    console.log("[Begin] Updatae languages Receive from UI:");
-    console.log("language", languages);
-    setLanguageArray(languages);
-    // setLanguageArray(languages);
-    console.log("[End] Receive languages Receive from UI:");
-  });
+  onmessage = (event) => {
+    if (event.data.pluginMessage.type === 'UPDATE_LANGUAGES') {
+      setLanguageArray(event.data.pluginMessage.payload);
+    }
+  };
 
   const options: Array<TabsOption> = [
     {

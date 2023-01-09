@@ -18,7 +18,7 @@ const initUIPlugin = async () => {
 // Post message to UI
 const updateLanguageToUI = () => {
   console.log("[Begin] Update Language Send to UI");
-  emit("UPDATE_LANGUAGES", getLanguageArray());
+  figma.ui.postMessage({ type: 'UPDATE_LANGUAGES', payload: getLanguageArray()})
   console.log("[End] Update Language Send to UI");
 };
 
