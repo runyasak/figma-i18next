@@ -1,4 +1,4 @@
-import { emit, once, on, showUI } from "@create-figma-plugin/utilities";
+import { once, on, showUI } from "@create-figma-plugin/utilities";
 import { CloseHandler } from "./types";
 import {
   getLanguageArray,

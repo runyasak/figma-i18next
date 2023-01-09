@@ -1,5 +1,3 @@
-import { on, once } from "@create-figma-plugin/utilities";
-import { useRef, useEffect } from "preact/hooks";
 import { h, JSX } from "preact";
 import { useState } from "preact/hooks";
 import { Layers } from "./page/layers";
