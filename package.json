@@ -11,9 +11,15 @@
     "@create-figma-plugin/tsconfig": "^2.0.1",
     "@figma/plugin-typings": "1.45.0",
     "@types/jsoneditor": "^9.9.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.44.0",
-    "eslint": "^8.28.0",
-    "prettier": "^2.6.2",
+    "eslint": "^8.0.1",
+    "eslint-config-standard-with-typescript": "^26.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.31.11",
+    "prettier": "2.8.2",
     "typescript": "^4"
   },
   "scripts": {
