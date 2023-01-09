@@ -8,6 +8,7 @@ import {
 } from "./utility/languageStorage";
 import { Language, setLanguageResource } from "./utility/languageStorage";
 import { i18nInit } from "./utility/i18nUtility";
+import { updateAllTextProperty } from "./updateText";
 
 const initUIPlugin = async () => {
   await initLanguageStorage();
@@ -37,6 +38,7 @@ export default function () {
       replaceLanguageResource(currentLanguageName, language);
     }
     updateLanguageToUI();
+    updateAllTextProperty();
   });
 
   on("DELETE_LANGUAGE", (languageName: string) => {
